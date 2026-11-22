@@ -1,0 +1,5 @@
+{
+ "note": "Study folders kept out of the first public release until the owner publishes them together with the planned disclosure. They are complete and unchanged in the private repository. The shared code file research/v018-h1-detection/h1lib.py is published; the rest of these folders is not.",
+ "deferred_study_folders": ["research/v018-h1-detection", "research/v018-api-validation", "research/v018-estimators"],
+ "kept_files": ["research/v018-h1-detection/h1lib.py"]
+}

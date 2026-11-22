@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RNGLab Unified</title>
+  <link rel="stylesheet" href="/static/css/lab.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='5' fill='%234cc2ff'/%3E%3C/svg%3E">
+</head>
+<body>
+  <header id="topbar">
+    <div id="brand"><span class="dot"></span>RNGLab Unified <small>research workbench</small></div>
+    <nav id="tabs" aria-label="screens">
+      <a href="#/mission" data-tab="mission" title="g d">Mission</a>
+      <a href="#/experiments" data-tab="experiments" title="g x">Experiments</a>
+      <a href="#/atlas" data-tab="atlas" title="g a">Atlas</a>
+      <a href="#/lab/pimc-harmonic" data-tab="lab" title="g b">Experiment builder</a>
+      <a href="#/overview" data-tab="overview" title="g c">Live console</a>
+      <a href="#/compare" data-tab="compare" title="g r">Results</a>
+      <a href="#/models" data-tab="models" title="g m">Models</a>
+      <a href="#/rng" data-tab="rng">RNG analysis</a>
+      <a href="#/evidence" data-tab="evidence" title="g e">Evidence</a>
+      <a href="#/studies" data-tab="studies">H1 study viewer</a>
+      <a href="#/sources" data-tab="sources" title="g s">Data sources</a>
+      <a href="#/provenance" data-tab="provenance" title="g p">Provenance</a>
+      <a href="#/archive" data-tab="archive">Run archive</a>
+    </nav>
+    <div id="topright"><span id="clock"></span><button class="iconbtn" id="theme" title="light / dark">◐</button></div>
+  </header>
+  <main id="view"></main>
+  <script type="module" src="/static/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+ "release": "first public release of RNGLab",
+ "source": "owner's private repository",
+ "withheld_file_count": 224,
+ "deferred_study_folders": [
+  "research/v018-h1-detection",
+  "research/v018-api-validation",
+  "research/v018-estimators"
+ ],
+ "note": "Some files are withheld from this release (study folders deferred to a later release, and files with machine-specific paths). Tests that need them are skipped and named in the test report."
+}

@@ -1,0 +1,3348 @@
+{
+  "schema": "rnglab-unified-capability-matrix-v1",
+  "generated_from_commit": "e690488",
+  "entries": [
+    {
+      "id": "byte-ledger-reference-prngs",
+      "title": "Byte-accounted reference generators (PCG64, xoshiro256++, MT19937, ChaCha20, OS entropy)",
+      "kind": "RandomSource",
+      "research_line": "core-infrastructure",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab14/sources/base.py",
+          "src/rnglab14/sources/reference.py",
+          "src/rnglab/sources.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_sources14.py",
+          "tests/test_sources13.py",
+          "tests/test_sources12.py",
+          "tests/v018/test_v018_namespace.py"
+        ],
+        "approx_test_count": 37
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unit-tested",
+      "outcome_summary": "Every read passes through RandomSource.read_bytes with a SHA-256 ledger; measured throughput of the pure-Python generators is 29-156 times below the figures claimed in SOURCE_COMPARISON.md.",
+      "evidence": [
+        "docs/v018/evidence/source_throughput.json",
+        "docs/v018/AUDIT.md"
+      ],
+      "constraints": "ChaCha20, PCG64 and xoshiro256++ are pure Python and slow; OS entropy is not replayable; a digest identifies a stream, it is not an entropy certificate.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "numpy-pcg64-word-stream",
+      "title": "NumPy PCG64 raw-word stream with exact word accounting (nuclear module)",
+      "kind": "RandomSource",
+      "research_line": "nuclear-v020",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab/nuclear/streams.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v020/nuclear/test_layer_a_streams.py",
+          "tests/v020/nuclear/test_layer_a_namespaces.py"
+        ],
+        "approx_test_count": 12
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unit-tested",
+      "outcome_summary": "Drove the NC1 families of both frozen nuclear verifications with exact consumption checks (D1) holding in every run.",
+      "evidence": [
+        "research/v020-nuclear-a-verify/results/verification.json",
+        "docs/v020/nuclear/NUCLEAR_PHYSICS_VALIDATION.md"
+      ],
+      "constraints": "Healthy generator only; namespaces of frozen studies must not be sampled by tests.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "physical-pulse-sources-and-conditioners",
+      "title": "Physical pulse source model (Geiger-Mueller) and Von Neumann / XOR-parity conditioners",
+      "kind": "RandomSource",
+      "research_line": "physical-entropy",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab14/sources/physical.py",
+          "src/rnglab14/sources/conditioning.py",
+          "src/rnglab13/sources/physical.py",
+          "src/rnglab13/sources/hardware.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_sources14.py",
+          "tests/test_recovery_forecast_sources.py"
+        ],
+        "approx_test_count": 22
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unit-tested",
+      "outcome_summary": "Software models only; no physical GM stream has been acquired, so no entropy result exists.",
+      "evidence": [
+        "docs/physical/GM_NEXT_WEEK.md",
+        "docs/v018/AUDIT.md"
+      ],
+      "constraints": "No recorded physical stream enters these classes yet; any future stream needs its own provenance and no assumed uniformity.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "crypto-blue-sources",
+      "title": "Crypto BLUE synthetic weak-seed and physical-placeholder sources",
+      "kind": "RandomSource",
+      "research_line": "crypto-blue",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab_crypto/sources/physical.py",
+          "src/rnglab_crypto/sources/__init__.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_crypto_sources.py"
+        ],
+        "approx_test_count": 5
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unit-tested",
+      "outcome_summary": "Used by the BLUE campaigns to supply bounded 8- and 12-bit seed supports whose keys were all recovered by bounded search.",
+      "evidence": [
+        "research/crypto-blue/confirmation-reviewed/RESULTS.md"
+      ],
+      "constraints": "Synthetic material only; no physical samples provision keys.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "native-buffered-pcg64",
+      "title": "Native buffered PCG64 bulk source (C via ctypes)",
+      "kind": "RandomSource",
+      "research_line": "native-optimization",
+      "source": {
+        "branch": "feature/native-simd-benchmark",
+        "commit": "a3f307b",
+        "paths": [
+          "research/native-optimization/kernels.c",
+          "research/native-optimization/native.py",
+          "research/native-optimization/adapters.py"
+        ]
+      },
+      "maturity": "engineering-harness",
+      "test_coverage": {
+        "test_paths": [
+          "tests/native_optimization/test_native.py",
+          "tests/native_optimization/test_boundaries.py"
+        ],
+        "approx_test_count": null
+      },
+      "reference": "Bit-exact agreement with the reference Stage D generation path",
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "exploratory",
+      "outcome_summary": "With the buffered native bundle the full single-worker generation path went from 12.107 s to 8.216 s per run, with 360 timed runs agreeing exactly with the reference.",
+      "evidence": [
+        "docs/native-optimization/BENCHMARKS.md",
+        "docs/native-optimization/EQUIVALENCE.md"
+      ],
+      "constraints": "Harness refuses every namespace except its benchmark namespace; GCC/x86 only measured; not a Stage D backend; depends on an externally supplied measure.py by hash.",
+      "integration_method": "code-source-worker",
+      "reachable_from_unified": false
+    },
+    {
+      "id": "bit-level-degraded-fault-source",
+      "title": "Bit-level fault adapter (bias, Markov rho, stuck bit, periodic coupling)",
+      "kind": "Fault",
+      "research_line": "core-infrastructure",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab14/sources/faults.py",
+          "src/rnglab/faults.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_sources14.py",
+          "tests/test_recovery_forecast_sources.py"
+        ],
+        "approx_test_count": 22
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unit-tested",
+      "outcome_summary": "Available through the v0.18 namespace; rho acts on the emitted bit stream, not on consumed uniforms, and the rho path loops per bit in Python.",
+      "evidence": [
+        "src/rnglab/faults.py",
+        "docs/v020/nuclear/NUCLEAR_ARCHITECTURE.md"
+      ],
+      "constraints": "Not used by any frozen v0.18-v0.20 campaign.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "phase2-channel-faults",
+      "title": "Phase II channel faults: acceptance-uniform shift and proposal/acceptance coupling",
+      "kind": "Fault",
+      "research_line": "pimc-uncertainty",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/phase2-20261030/experiment/fault_study.py"
+        ]
+      },
+      "maturity": "frozen-study-code",
+      "test_coverage": {
+        "test_paths": [
+          "research/phase2-20261030/experiment/test_fault_study.py"
+        ],
+        "approx_test_count": null
+      },
+      "reference": "Byte-identical first 2,048 sweeps against the healthy run (pre-onset identity), Controlled_RNG_fault_report.md",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/phase2-20261030/experiment/fault-study-v1/protocol.json",
+        "sha256_file": "research/phase2-20261030/SHA256SUMS"
+      },
+      "status": "independently-verified",
+      "outcome_summary": "On the refreshed sampler healthy coverage was 487/512 versus 0/512 under acceptance shift and 13/512 under coupling (post-onset window). Only the pre-onset identity is an independent check; the coverage figures are experiment outcomes.",
+      "evidence": [
+        "research/phase2-20261030/experiment/fault-study-v1/summary.csv",
+        "research/phase2-20261030/reports/Controlled_RNG_fault_report.md"
+      ],
+      "constraints": "Implemented only in the standalone Phase II study, not in the package; strong synthetic adapter faults, not PCG64 defects.",
+      "integration_method": "code-source-worker",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "stage-c-word-faults",
+      "title": "Word-level faults SHIFT, LAG1, DUP and real GFSR lag pairs (Stage C)",
+      "kind": "Fault",
+      "research_line": "central-hypothesis-H1",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/v018-h1-detection/h1lib.py"
+        ]
+      },
+      "maturity": "frozen-study-code",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v018/test_h1_lib.py",
+          "tests/v018/test_h1_campaign.py"
+        ],
+        "approx_test_count": 22
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v018-h1-detection/protocol.json",
+        "sha256_file": "research/v018-h1-detection/protocol.sha256"
+      },
+      "status": "independently-verified",
+      "outcome_summary": "Stage C ran all four families with I-1 to I-4 passing and a 319/319 independent recount; GFSR including R250 was harmless and quiet in this application.",
+      "evidence": [
+        "research/v018-h1-detection/results/gates.json",
+        "research/v018-h1-detection/results/recount.json"
+      ],
+      "constraints": "Constant severity per cell; channel-specific faults excluded by protocol section 9.",
+      "integration_method": "code-source-worker",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "stage-d-ramp-faults",
+      "title": "Stage D severity ramp profile and word-fault adapter (FaultyWords)",
+      "kind": "Fault",
+      "research_line": "central-hypothesis-H2",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/v019-d-pilot/dlib.py"
+        ]
+      },
+      "maturity": "frozen-study-code",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v019/test_d_pilot_lib.py",
+          "tests/v019/test_audit_d_pilot.py"
+        ],
+        "approx_test_count": 31
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v019-d-pilot/protocol.json",
+        "sha256_file": "research/v019-d-pilot/protocol.sha256"
+      },
+      "status": "independently-verified",
+      "outcome_summary": "An independent regeneration reproduced marks, traces, severity and stream hashes bit for bit on eight full-length runs.",
+      "evidence": [
+        "docs/v019/RESEARCH_REPORT.md",
+        "docs/v019/IMPLEMENTATION_AUDIT.md"
+      ],
+      "constraints": "Accepts only single 8-byte reads and is indexed by sweep; the pilot itself has not been run.",
+      "integration_method": "code-source-worker",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "crypto-blue-faults",
+      "title": "Crypto BLUE fault injectors (nonce reuse, counter reset, weak seeds, DRBG compromise)",
+      "kind": "Fault",
+      "research_line": "crypto-blue",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab_crypto/faults/__init__.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_crypto_faults.py"
+        ],
+        "approx_test_count": 7
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unit-tested",
+      "outcome_summary": "ECDSA nonce reuse recovered the synthetic P-256 private scalar in 128/128 confirmation cases.",
+      "evidence": [
+        "docs/crypto/RESULTS.md",
+        "research/crypto-blue/confirmation-reviewed/RESULTS.md"
+      ],
+      "constraints": "Synthetic, locally generated material only.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "finance-reused-seed-fault",
+      "title": "Reused-seed provider for parallel workers (finance)",
+      "kind": "Fault",
+      "research_line": "finance-poc",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab_finance/faults/injection.py"
+        ]
+      },
+      "maturity": "proof-of-concept",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_finance_faults.py"
+        ],
+        "approx_test_count": 6
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unit-tested",
+      "outcome_summary": "K workers produce identical paths; the sqrt(K) standard-error deflation is an analytic consequence that no saved experiment measures.",
+      "evidence": [
+        "docs/v018/AUDIT.md"
+      ],
+      "constraints": "No experiment; earlier 'severe risk underestimation' wording is unbacked.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "pimc-harmonic-package",
+      "title": "Harmonic path-integral Monte Carlo through the package API, with exact centroid refresh",
+      "kind": "Simulation",
+      "research_line": "pimc-uncertainty",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab14/models/pimc_harmonic.py",
+          "src/rnglab/models.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_pimc_centroid_heatbath.py",
+          "tests/test_pimc_run_options.py",
+          "tests/v018/test_pimc_default_golden.py",
+          "tests/v018/test_pimc_initial_path_provenance.py"
+        ],
+        "approx_test_count": 24
+      },
+      "reference": "Exact finite-bead harmonic energy (M=16, beta=2)",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v018-api-validation/protocol.json",
+        "sha256_file": "research/v018-api-validation/protocol.sha256"
+      },
+      "status": "experimentally-validated",
+      "outcome_summary": "Through the package API the refreshed sampler covered 3846/4096 (0.9390) and local Metropolis 3323/4096 (0.8113), reproducing Phase II.",
+      "evidence": [
+        "research/v018-api-validation/REPORT.md",
+        "research/v018-api-validation/results/gates.json"
+      ],
+      "constraints": "One parameter point; default batch sizes under-cover even with refresh (0.8611 at b=32).",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "pimc-standalone-phase2",
+      "title": "Standalone NumPy/Numba harmonic PIMC of Phase II",
+      "kind": "Simulation",
+      "research_line": "pimc-uncertainty",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/phase2-20261030/experiment/study.py",
+          "research/phase2-20261030/theory/harmonic_reference_checks.py"
+        ]
+      },
+      "maturity": "frozen-study-code",
+      "test_coverage": {
+        "test_paths": [
+          "research/phase2-20261030/experiment/test_study.py"
+        ],
+        "approx_test_count": null
+      },
+      "reference": "Exact finite-M harmonic energy (theory/harmonic_reference_checks.py)",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/phase2-20261030/experiment/confirmation-v1/protocol.json",
+        "sha256_file": "research/phase2-20261030/SHA256SUMS"
+      },
+      "status": "independently-verified",
+      "outcome_summary": "Exact finite-M reference checks pass. In the frozen confirmation, centroid refresh 964/1024 and IID Gaussian paths 969/1024 met their gates, while local Metropolis (811/1024) failed its coverage and variance-ratio gates on a healthy RNG: a sampler/estimator failure, not an RNG problem (primary_decision.json pass: false).",
+      "evidence": [
+        "research/phase2-20261030/experiment/confirmation-v1/summary.csv",
+        "research/phase2-20261030/experiment/confirmation-v1/primary_decision.json"
+      ],
+      "constraints": "19 NPZ trace archives are off-repo; one workload and one interval method.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "ising-2d-samplers",
+      "title": "2D Ising Metropolis samplers (source-API and vectorised kernels)",
+      "kind": "Simulation",
+      "research_line": "ising-estimators",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab14/models/ising_2d.py",
+          "src/rnglab16/core.py",
+          "src/rnglab16/campaign.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/trident/test_reference.py",
+          "tests/test_models14.py",
+          "tests/v018/test_convergence_susceptibility.py"
+        ],
+        "approx_test_count": 25
+      },
+      "reference": "Exact enumeration for periodic L in {2,3,4}",
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unit-tested",
+      "outcome_summary": "Healthy chains give exact-matching energy but a badly wrong plug-in susceptibility at L4 T1.5 (0.745828 vs exact 10.403227).",
+      "evidence": [
+        "docs/calibrate/V017_NEGATIVE_FINDINGS.md",
+        "research/v018-estimators/REPORT.md"
+      ],
+      "constraints": "No exact reference above L=4; strong acceptance shift makes magnetised states absorbing.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "vmc-harmonic",
+      "title": "Harmonic variational Monte Carlo",
+      "kind": "Simulation",
+      "research_line": "pimc-uncertainty",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab14/models/vmc_harmonic.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_models14.py"
+        ],
+        "approx_test_count": 6
+      },
+      "reference": "Exact harmonic ground state (alpha=0.5)",
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unit-tested",
+      "outcome_summary": "Demonstrates the known zero-variance property: a proposal-biased chain reports energy 0.5 with zero variance while <x^2> is wrong by 1.656.",
+      "evidence": [
+        "docs/v018/evidence/vmc_masking_values.json"
+      ],
+      "constraints": "Demonstration of a textbook property, not a hypothesis; earlier README numbers did not reproduce.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "nuclear-layer-a-event-engine",
+      "title": "Nuclear Layer A event-level decay simulator (synthetic schemes)",
+      "kind": "Simulation",
+      "research_line": "nuclear-v020",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab/nuclear/decay.py",
+          "src/rnglab/nuclear/checks.py",
+          "src/rnglab/nuclear/manifest.py",
+          "src/rnglab/nuclear/streams.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v020/nuclear"
+        ],
+        "approx_test_count": 115
+      },
+      "reference": "Analytic decay laws (exponential, Bateman, branching, photon yields)",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v020-nuclear-a-verify/protocol.json",
+        "sha256_file": "research/v020-nuclear-a-verify/protocol.sha256"
+      },
+      "status": "independently-verified",
+      "outcome_summary": "Frozen verification at c616a7b: R1 PASS, R2 MET; no Holm rejection in NC1 (47 tests) or NC2 (33 tests); deterministic checks D1-D5 and A1 hold.",
+      "evidence": [
+        "research/v020-nuclear-a-verify/results/verification.json",
+        "docs/v020/nuclear/NUCLEAR_PHYSICS_VALIDATION.md"
+      ],
+      "constraints": "Synthetic schemes, no nuclear data; experimental validation not applicable; RNG-defect sensitivity untested (Phases E/F).",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "nuclear-b2-aggregate-engine",
+      "title": "Nuclear B2 aggregated (population-level) decay engine",
+      "kind": "Simulation",
+      "research_line": "nuclear-v020",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab/nuclear/aggregate.py",
+          "src/rnglab/nuclear/binomial.py",
+          "src/rnglab/nuclear/paths.py",
+          "src/rnglab/nuclear/moments.py",
+          "src/rnglab/nuclear/comparison.py",
+          "src/rnglab/nuclear/precursors.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v020/nuclear_b2"
+        ],
+        "approx_test_count": 202
+      },
+      "reference": "Multinomial law of independent decay; frozen Layer A engine",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v020-nuclear-b2-verify/protocol.json",
+        "sha256_file": "research/v020-nuclear-b2-verify/protocol.sha256"
+      },
+      "status": "independently-verified",
+      "outcome_summary": "Frozen verification: R1 PASS, R2 MET, C1 holds for both families (null false-FAIL 0.0088 NC1, 0.0080 NC2); populations up to 2^60+12,345 conserved.",
+      "evidence": [
+        "research/v020-nuclear-b2-verify/results/verification.json",
+        "research/v020-nuclear-b2-verify/results/calibration.json",
+        "docs/v020/nuclear/NUCLEAR_B2_VALIDATION.md"
+      ],
+      "constraints": "Open: BT-NEUTRON NC1 tail at 2.52x the union bound in calibration; Xc-400m variance observation unresolved; synthetic schemes only.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "finance-risk-models",
+      "title": "Finance proof of concept: European option, portfolio VaR, expected shortfall",
+      "kind": "Simulation",
+      "research_line": "finance-poc",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab_finance/models/european_option.py",
+          "src/rnglab_finance/models/portfolio_var.py",
+          "src/rnglab_finance/models/expected_shortfall.py"
+        ]
+      },
+      "maturity": "proof-of-concept",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_finance_models.py"
+        ],
+        "approx_test_count": 6
+      },
+      "reference": "Black-Scholes closed form",
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unit-tested",
+      "outcome_summary": "Models and reference agree in unit tests; no saved experiment exists.",
+      "evidence": [
+        "docs/finance/FINANCIAL_MODELS.md"
+      ],
+      "constraints": "Regulatory framing (SR 11-7, TRIM, Basel III) withdrawn as unbacked.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "crypto-blue-pipeline",
+      "title": "Crypto BLUE conditioning, AEAD, signature and DRBG pipeline",
+      "kind": "Simulation",
+      "research_line": "crypto-blue",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab_crypto/primitives/aead.py",
+          "src/rnglab_crypto/primitives/conditioning.py",
+          "src/rnglab_crypto/primitives/signatures.py",
+          "src/rnglab_crypto/experiments/campaign.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_crypto_primitives.py",
+          "tests/test_crypto_experiments.py"
+        ],
+        "approx_test_count": 17
+      },
+      "reference": "RFC known-answer tests for RFC6979 and Ed25519",
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unit-tested",
+      "outcome_summary": "A known 8-bit seed through conditioner and expander yields streams that mostly pass three diagnostics yet are predicted exactly in 128/128 replicas.",
+      "evidence": [
+        "docs/crypto/RESULTS.md",
+        "research/crypto-blue/confirmation-reviewed/results.json"
+      ],
+      "constraints": "Three diagnostics, not the full SP 800-22 battery; synthetic data only.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "decision-support-model",
+      "title": "Decision-support model (v0.14)",
+      "kind": "Simulation",
+      "research_line": "legacy-v014",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab14/models/decision_support.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [],
+        "approx_test_count": null
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "implemented",
+      "outcome_summary": "Exposed by the Laboratory GUI adapter; no frozen study uses it.",
+      "evidence": [
+        "src/rnglab14/models/decision_support.py"
+      ],
+      "constraints": "No dedicated test file found.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "pi-monte-carlo-toy",
+      "title": "Monte Carlo pi estimator (teaching workload)",
+      "kind": "Simulation",
+      "research_line": "legacy-v013",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab14/models/pi_mc.py",
+          "src/rnglab13/models/pi_mc.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_models_forecast13.py"
+        ],
+        "approx_test_count": 6
+      },
+      "reference": "pi",
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unit-tested",
+      "outcome_summary": "Toy workload with an exact target; used by the Laboratory GUI.",
+      "evidence": [
+        "src/rnglab14/models/pi_mc.py"
+      ],
+      "constraints": "Not part of any frozen study.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "detector-export-inspector",
+      "title": "Detector waveform export inspector and ceiling check",
+      "kind": "DetectorImporter",
+      "research_line": "physical-entropy",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "scripts/inspect_detector_export.py",
+          "scripts/v018/detector_ceiling_check.py"
+        ]
+      },
+      "maturity": "audit-script",
+      "test_coverage": {
+        "test_paths": [],
+        "approx_test_count": null
+      },
+      "reference": "SHA-256 of the raw export",
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "independently-verified",
+      "outcome_summary": "Re-derived from the raw export: 117,962 records, 108,473 (91.96%) reach the 16-bit ceiling and every timestamp is a multiple of 80.",
+      "evidence": [
+        "docs/v018/evidence/detector_inventory.json",
+        "docs/v018/evidence/detector_ceiling.json",
+        "docs/v018/evidence/detector_export.sha256"
+      ],
+      "constraints": "Raw export is off-repo; particle identity and entropy per sample not established.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "physical-acquisition-suite",
+      "title": "Physical acquisition suite (acquire, ingest, integrity, NIST checks) with Arduino firmware",
+      "kind": "DetectorImporter",
+      "research_line": "physical-entropy",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab15/acquire.py",
+          "src/rnglab15/ingest.py",
+          "src/rnglab15/integrity.py",
+          "src/rnglab15/pipeline.py",
+          "hardware/arduino/RNGLabSensors.ino",
+          "hardware/scripts/capture.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_physical15.py"
+        ],
+        "approx_test_count": 35
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unit-tested",
+      "outcome_summary": "Pipeline is tested on fixtures; no physical stream has been assessed for entropy.",
+      "evidence": [
+        "docs/physical/PIPELINE.md",
+        "docs/physical/MUON_DETECTOR_ASSESSMENT.md"
+      ],
+      "constraints": "Sensor streams have no validated entropy; hardware use needs technician-approved interfaces.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "gm-tube-acquisition",
+      "title": "Geiger-Mueller event acquisition",
+      "kind": "DetectorImporter",
+      "research_line": "physical-entropy",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "docs/physical/GM_NEXT_WEEK.md"
+        ]
+      },
+      "maturity": "plan",
+      "test_coverage": {
+        "test_paths": [],
+        "approx_test_count": null
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "planned",
+      "outcome_summary": "A plan for instrument metadata and raw capture; no GM data exist in the repository.",
+      "evidence": [
+        "docs/physical/GM_NEXT_WEEK.md",
+        "docs/v018/AUDIT.md"
+      ],
+      "constraints": "Event output availability unconfirmed.",
+      "integration_method": "none-yet",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "physical-90b-entropy-claim",
+      "title": "SP 800-90B min-entropy evaluation of a physical stream",
+      "kind": "DetectorImporter",
+      "research_line": "physical-entropy",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab13/standards/entropy_90b.py"
+        ]
+      },
+      "maturity": "claim-only",
+      "test_coverage": {
+        "test_paths": [],
+        "approx_test_count": null
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unbacked",
+      "outcome_summary": "Earlier README claim withdrawn: estimators exist but no 90B assessment of any physical stream was run.",
+      "evidence": [
+        "docs/v018/AUDIT.md"
+      ],
+      "constraints": "Capability exists in code; no result.",
+      "integration_method": "none-yet",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "sp800-22-subset",
+      "title": "SP 800-22 subset in rnglab14 standards (monobit, block frequency, runs)",
+      "kind": "Monitor",
+      "research_line": "core-infrastructure",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab14/standards/sp800_22.py",
+          "src/rnglab13/standards/sp800_22.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_standards14.py",
+          "tests/test_standards13.py"
+        ],
+        "approx_test_count": 11
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unit-tested",
+      "outcome_summary": "Implements three tests; the 'all 15 pass' claim in SOURCE_COMPARISON.md is impossible with this code.",
+      "evidence": [
+        "docs/v018/AUDIT.md"
+      ],
+      "constraints": "Three tests only.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "stage-c-conventional-battery",
+      "title": "Stage C conventional battery: seven SP 800-22 tests plus lag-1 correlation and identical adjacent words",
+      "kind": "Monitor",
+      "research_line": "central-hypothesis-H1",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/v018-h1-detection/h1lib.py",
+          "research/v018-h1-detection/analyze.py"
+        ]
+      },
+      "maturity": "frozen-study-code",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v018/test_h1_lib.py"
+        ],
+        "approx_test_count": 16
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v018-h1-detection/protocol.json",
+        "sha256_file": "research/v018-h1-detection/protocol.sha256"
+      },
+      "status": "experimentally-validated",
+      "outcome_summary": "Calibrated to a whole-run false-alarm rate 0.048584 (gate V2) and alarmed after onset in every run of all 18 synthetic cells.",
+      "evidence": [
+        "research/v018-h1-detection/results/gates.json",
+        "research/v018-h1-detection/REPORT.md"
+      ],
+      "constraints": "For LAG1 the early detection depended on the targeted lag-1 test (Sensitivity 01).",
+      "integration_method": "code-source-worker",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "stage-c-application-monitors",
+      "title": "Application-arm monitors: TD-CV estimator invariant and uphill-proposal fraction",
+      "kind": "Monitor",
+      "research_line": "central-hypothesis-H1",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/v018-h1-detection/h1lib.py"
+        ]
+      },
+      "maturity": "frozen-study-code",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v018/test_h1_lib.py"
+        ],
+        "approx_test_count": 16
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v018-h1-detection/protocol.json",
+        "sha256_file": "research/v018-h1-detection/protocol.sha256"
+      },
+      "status": "negative-result",
+      "outcome_summary": "The application arm never alarmed alone in a synthetic cell and, when both alarmed, was later by a median of 512 to 5,376 sweeps; H1-C not supported.",
+      "evidence": [
+        "research/v018-h1-detection/REPORT.md",
+        "research/v018-h1-detection/results/report_numbers.json"
+      ],
+      "constraints": "Matched false alarms (0.0424805); harmonic PIMC only.",
+      "integration_method": "code-source-worker",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "sp800-90b-health-tests",
+      "title": "SP 800-90B repetition-count and adaptive-proportion health tests",
+      "kind": "Monitor",
+      "research_line": "core-infrastructure",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab14/standards/health_90b.py",
+          "src/rnglab/monitors.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_standards14.py",
+          "tests/test_standards13.py"
+        ],
+        "approx_test_count": 11
+      },
+      "reference": "Exact binomial tail cutoffs",
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unit-tested",
+      "outcome_summary": "In Stage C the health tests alone stayed near their healthy rate for LAG1, and for DUP up to severity 0.19.",
+      "evidence": [
+        "research/v018-h1-detection/README.md"
+      ],
+      "constraints": "No field result on a physical stream.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "entropy-90b-estimators",
+      "title": "SP 800-90B entropy estimators",
+      "kind": "Monitor",
+      "research_line": "physical-entropy",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab14/standards/entropy_90b.py",
+          "src/rnglab13/standards/entropy_90b.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_standards13.py"
+        ],
+        "approx_test_count": 7
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unit-tested",
+      "outcome_summary": "Capability only; never applied to a physical stream.",
+      "evidence": [
+        "docs/v018/AUDIT.md"
+      ],
+      "constraints": "No physical evaluation.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "frozen-rank-calibration",
+      "title": "Frozen rank calibration of whole-trajectory monitor scores",
+      "kind": "Monitor",
+      "research_line": "core-infrastructure",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab14/monitoring/calibration.py",
+          "src/rnglab17/endpoints.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_forecast_monitoring14.py",
+          "tests/calibrate/test_endpoints.py"
+        ],
+        "approx_test_count": 14
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unit-tested",
+      "outcome_summary": "Used for the v0.17 whole-path calibration whose H1 false-alarm ceiling failed jointly (10/12 cells).",
+      "evidence": [
+        "docs/calibrate/HYPOTHESIS_STATUS.json"
+      ],
+      "constraints": "Exchangeability assumption.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "dual-integrity-monitor",
+      "title": "v0.14 dual integrity monitor ('0.0% hazardous gap')",
+      "kind": "Monitor",
+      "research_line": "legacy-v014",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab14/monitoring/dual_monitor.py",
+          "runs/v014-integrated-experiment"
+        ]
+      },
+      "maturity": "historical-snapshot",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_forecast_monitoring14.py"
+        ],
+        "approx_test_count": 5
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "superseded",
+      "outcome_summary": "The 0.0% hazardous-gap result came from one uncalibrated run of 100 snapshots and is contradicted by Phase II monitor blind spots.",
+      "evidence": [
+        "docs/v018/AUDIT.md",
+        "docs/archive/V0141_CORRECTIONS.md",
+        "docs/validation/EXPERIMENT_REGISTRY.md"
+      ],
+      "constraints": "Do not cite.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "phase2-fault-monitors",
+      "title": "Phase II monitors: marginal source mean, joint channel, application shape",
+      "kind": "Monitor",
+      "research_line": "pimc-uncertainty",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/phase2-20261030/experiment/fault_study.py"
+        ]
+      },
+      "maturity": "frozen-study-code",
+      "test_coverage": {
+        "test_paths": [
+          "research/phase2-20261030/experiment/test_fault_study.py"
+        ],
+        "approx_test_count": null
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/phase2-20261030/experiment/fault-study-v1/protocol.json",
+        "sha256_file": "research/phase2-20261030/SHA256SUMS"
+      },
+      "status": "exploratory",
+      "outcome_summary": "The marginal source check missed coupling, the joint check detected it, and the application-shape monitor missed the acceptance shift; no general ranking follows.",
+      "evidence": [
+        "research/phase2-20261030/reports/Controlled_RNG_fault_report.md",
+        "research/phase2-20261030/experiment/fault-study-v1/summary.csv"
+      ],
+      "constraints": "Coupling is invisible to single-stream tests by construction.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "crypto-blue-source-monitor",
+      "title": "Crypto BLUE source health monitor with frozen healthy calibration",
+      "kind": "Monitor",
+      "research_line": "crypto-blue",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab_crypto/monitoring/__init__.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_crypto_monitoring.py"
+        ],
+        "approx_test_count": 5
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/crypto-blue/confirmation-reviewed/protocol.json",
+        "sha256_file": null
+      },
+      "status": "negative-result",
+      "outcome_summary": "The frozen healthy false-alarm criterion (<= 0.10) was not met: CP95 upper bound 0.1194 (8/128 healthy alarms).",
+      "evidence": [
+        "research/crypto-blue/confirmation-reviewed/RESULTS.md",
+        "README.md"
+      ],
+      "constraints": "Alarms during downstream nonce faults are alarms on an unchanged source, not detections.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "native-measurement-kernels",
+      "title": "Native C/AVX2 measurement kernels (pattern histogram, cumulative max, longest run)",
+      "kind": "Monitor",
+      "research_line": "native-optimization",
+      "source": {
+        "branch": "feature/native-simd-benchmark",
+        "commit": "a3f307b",
+        "paths": [
+          "research/native-optimization/kernels.c",
+          "research/native-optimization/native.py"
+        ]
+      },
+      "maturity": "engineering-harness",
+      "test_coverage": {
+        "test_paths": [
+          "tests/native_optimization/test_native.py",
+          "tests/native_optimization/test_boundaries.py"
+        ],
+        "approx_test_count": null
+      },
+      "reference": "Bit-exact agreement with reference kernels",
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "exploratory",
+      "outcome_summary": "Kernel speed-ups of 5.68x to 17.57x for the battery statistics with exact output agreement.",
+      "evidence": [
+        "docs/native-optimization/BENCHMARKS.md",
+        "docs/native-optimization/EQUIVALENCE.md"
+      ],
+      "constraints": "Only two functions use explicit intrinsics; not installed into Stage D.",
+      "integration_method": "code-source-worker",
+      "reachable_from_unified": false
+    },
+    {
+      "id": "exact-finite-bead-energy",
+      "title": "Exact finite-bead harmonic PIMC energy and Gaussian path sampler",
+      "kind": "ReferenceLaw",
+      "research_line": "pimc-uncertainty",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab14/models/pimc_harmonic.py",
+          "src/rnglab/references.py",
+          "research/phase2-20261030/theory/harmonic_reference_checks.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_pimc_centroid_heatbath.py"
+        ],
+        "approx_test_count": 9
+      },
+      "reference": "Closed-form finite-M Gaussian",
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "independently-verified",
+      "outcome_summary": "Phase II's independent reference calculations found no finite-M target or energy-formula explanation for the undercoverage.",
+      "evidence": [
+        "research/phase2-20261030/reports/PIMC_root_cause_report.md"
+      ],
+      "constraints": "m = hbar = omega = 1 units.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "ising-exact-enumeration",
+      "title": "Exact finite-lattice Ising enumeration (L <= 4)",
+      "kind": "ReferenceLaw",
+      "research_line": "ising-estimators",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab16/core.py",
+          "src/rnglab/references.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/trident/test_reference.py"
+        ],
+        "approx_test_count": 11
+      },
+      "reference": "Full state enumeration",
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unit-tested",
+      "outcome_summary": "Provides exact susceptibility 10.403227 at L4 T1.5; the earlier claim of L=8 exact validation is unbacked.",
+      "evidence": [
+        "docs/v018/AUDIT.md",
+        "research/v018-estimators/REPORT.md"
+      ],
+      "constraints": "Raises for L > 4.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "ising-absorbing-acceptance-shift",
+      "title": "Analytic result: acceptance shift delta >= exp(-8/T) makes magnetised Ising states absorbing",
+      "kind": "ReferenceLaw",
+      "research_line": "trident-v016",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "docs/trident/V016_ISING_STUDY.md",
+          "docs/trident/V016_MATHEMATICAL_THEORY.md"
+        ]
+      },
+      "maturity": "analytic",
+      "test_coverage": {
+        "test_paths": [],
+        "approx_test_count": null
+      },
+      "reference": "One-line derivation",
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "exploratory",
+      "outcome_summary": "Analytically backed; the numerical illustration's outputs are off-repo.",
+      "evidence": [
+        "docs/v018/AUDIT.md",
+        "README.md"
+      ],
+      "constraints": "Numbers partially backed only.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "nuclear-analytic-references",
+      "title": "Nuclear analytic references: Bateman path sums, decimal interval laws, matrix exponential",
+      "kind": "ReferenceLaw",
+      "research_line": "nuclear-v020",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab/nuclear/bateman.py",
+          "src/rnglab/nuclear/paths.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v020/nuclear/test_layer_a_bateman.py",
+          "tests/v020/nuclear_b2/test_b2_paths.py"
+        ],
+        "approx_test_count": 26
+      },
+      "reference": "Two independent analytic routes",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v020-nuclear-b2-verify/protocol.json",
+        "sha256_file": "research/v020-nuclear-b2-verify/protocol.sha256"
+      },
+      "status": "independently-verified",
+      "outcome_summary": "Decimal laws agree with two matrix exponentials within 1.57e-13 over 113 interval laws (D8); Layer A route difference 5.33e-15.",
+      "evidence": [
+        "research/v020-nuclear-b2-verify/results/verification.json",
+        "docs/v020/nuclear/NUCLEAR_B2_VALIDATION.md"
+      ],
+      "constraints": "Adaptive decimal precision, not certified interval arithmetic.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "ar1-exact-longrun-variance",
+      "title": "AR(1) exact finite-n long-run variance reference",
+      "kind": "ReferenceLaw",
+      "research_line": "ising-estimators",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/v018-estimators",
+          "src/rnglab/longrun.py"
+        ]
+      },
+      "maturity": "frozen-study-code",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v018/test_longrun.py"
+        ],
+        "approx_test_count": 11
+      },
+      "reference": "Closed form",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v018-estimators/protocol.json",
+        "sha256_file": "research/v018-estimators/protocol.sha256"
+      },
+      "status": "independently-verified",
+      "outcome_summary": "Served as exact target for the 4,096-replica long-run variance campaign with 28/28 recount agreement.",
+      "evidence": [
+        "research/v018-estimators/results/recount.json"
+      ],
+      "constraints": "Idealised AR(1).",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "noncentral-t-oracle",
+      "title": "Stage D oracle probability via the frozen noncentral-t call (F-01)",
+      "kind": "ReferenceLaw",
+      "research_line": "central-hypothesis-H2",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/v019-d-pilot/pilot_forecast.py",
+          "research/v019-audit/f01_oracle.py"
+        ]
+      },
+      "maturity": "frozen-study-code",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v019/test_f01_oracle.py"
+        ],
+        "approx_test_count": 11
+      },
+      "reference": "70-digit reference",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v019-d-pilot/protocol.json",
+        "sha256_file": "research/v019-d-pilot/protocol.sha256"
+      },
+      "status": "negative-result",
+      "outcome_summary": "The frozen scipy call is non-finite at 1,554 of 12,001 grid points between delta 8.53 and 43.61; resolution documented, awaiting the author's amendment decision.",
+      "evidence": [
+        "research/v019-audit/results/f01_oracle.json",
+        "docs/v020/F01_NUMERICAL_RESOLUTION.md"
+      ],
+      "constraints": "Cannot change a stop criterion per readiness report; oracle only.",
+      "integration_method": "code-source-worker",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "finance-black-scholes-reference",
+      "title": "Black-Scholes closed-form reference",
+      "kind": "ReferenceLaw",
+      "research_line": "finance-poc",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab_finance/models/black_scholes_reference.py"
+        ]
+      },
+      "maturity": "proof-of-concept",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_finance_models.py"
+        ],
+        "approx_test_count": 6
+      },
+      "reference": "Closed form",
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unit-tested",
+      "outcome_summary": "Unit-tested reference for the option model.",
+      "evidence": [
+        "src/rnglab_finance/models/black_scholes_reference.py"
+      ],
+      "constraints": "No experiment.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "longrun-variance-estimators",
+      "title": "Long-run variance estimators: BM, OBM, SV-B, SV-TH, Geyer",
+      "kind": "Estimator",
+      "research_line": "ising-estimators",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab/longrun.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v018/test_longrun.py"
+        ],
+        "approx_test_count": 11
+      },
+      "reference": "AR(1) exact variance",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v018-estimators/protocol.json",
+        "sha256_file": "research/v018-estimators/protocol.sha256"
+      },
+      "status": "experimentally-validated",
+      "outcome_summary": "Calibrated for tau <= 19 in 15/15 gates (H-L supported); BM(32) covers only 0.547 at tau ~ 199.",
+      "evidence": [
+        "research/v018-estimators/REPORT.md",
+        "research/v018-estimators/results/gates.json"
+      ],
+      "constraints": "Spectral estimators run 6-8% low at b/n=1/16; at long tau only Geyer stays near nominal.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "batch-length-diagnostic",
+      "title": "Batch-length diagnostic that abstains on short runs",
+      "kind": "Estimator",
+      "research_line": "ising-estimators",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab/longrun.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v018/test_longrun.py"
+        ],
+        "approx_test_count": 11
+      },
+      "reference": "AR(1) exact variance",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v018-estimators/protocol.json",
+        "sha256_file": "research/v018-estimators/protocol.sha256"
+      },
+      "status": "negative-result",
+      "outcome_summary": "Mixed, recorded as a negative result for its intended use: on AR(1) the frozen H-D gates were supported, but on the refreshed PIMC sampler it accepted every run while covering only 0.8828, and the v0.18 API-validation report says it must not be used for that sampler.",
+      "evidence": [
+        "research/v018-estimators/REPORT.md",
+        "research/v018-api-validation/REPORT.md"
+      ],
+      "constraints": "AR(1)-derived 10*tau rule misses slow shape modes of the PIMC path; not usable as an adequacy check for the refreshed PIMC sampler.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "susceptibility-symmetry-estimator",
+      "title": "Symmetry-aware Ising susceptibility estimator S",
+      "kind": "Estimator",
+      "research_line": "ising-estimators",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab/susceptibility.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v018/test_convergence_susceptibility.py"
+        ],
+        "approx_test_count": 8
+      },
+      "reference": "Exact enumeration",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v018-estimators/protocol.json",
+        "sha256_file": "research/v018-estimators/protocol.sha256"
+      },
+      "status": "experimentally-validated",
+      "outcome_summary": "Calibrated in all 9 cells (coverage 0.925-0.949, bias within +-0.0007).",
+      "evidence": [
+        "research/v018-estimators/REPORT.md"
+      ],
+      "constraints": "Relies on exact zero-field spin-flip symmetry; T=1.5 coverage near lower gate edge.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "susceptibility-jackknife",
+      "title": "Generic 16-chain jackknife susceptibility G",
+      "kind": "Estimator",
+      "research_line": "ising-estimators",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab/susceptibility.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v018/test_convergence_susceptibility.py"
+        ],
+        "approx_test_count": 8
+      },
+      "reference": "Exact enumeration",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v018-estimators/protocol.json",
+        "sha256_file": "research/v018-estimators/protocol.sha256"
+      },
+      "status": "negative-result",
+      "outcome_summary": "Unbiased but its interval fails in 5 of 9 cells (coverage 0.836-0.916 at T=1.5), so H-S is not supported.",
+      "evidence": [
+        "research/v018-estimators/REPORT.md"
+      ],
+      "constraints": "No generic repair established.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "susceptibility-plugin",
+      "title": "Within-chain plug-in susceptibility P",
+      "kind": "Estimator",
+      "research_line": "ising-estimators",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab/susceptibility.py",
+          "scripts/calibrate_susceptibility_probe.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v018/test_v017_susceptibility_replay.py",
+          "tests/v018/test_convergence_susceptibility.py"
+        ],
+        "approx_test_count": 9
+      },
+      "reference": "Exact enumeration",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v018-estimators/protocol.json",
+        "sha256_file": "research/v018-estimators/protocol.sha256"
+      },
+      "status": "negative-result",
+      "outcome_summary": "Healthy-chain failure replicated: relative bias -0.917 at L4 T1.5 (v0.17: 0.745828 against exact 10.403227).",
+      "evidence": [
+        "research/v018-estimators/REPORT.md",
+        "docs/calibrate/V017_NEGATIVE_FINDINGS.md"
+      ],
+      "constraints": "Estimator and mixing failure with healthy random numbers, not an RNG defect.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "split-rhat",
+      "title": "Rank-normalised split-R-hat convergence diagnostic",
+      "kind": "Estimator",
+      "research_line": "ising-estimators",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab/convergence.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v018/test_convergence_susceptibility.py"
+        ],
+        "approx_test_count": 8
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v018-estimators/protocol.json",
+        "sha256_file": "research/v018-estimators/protocol.sha256"
+      },
+      "status": "experimentally-validated",
+      "outcome_summary": "Flagged the sign non-mixing behind P's failure in 2,048 of 2,048 ensembles at L4 T1.5 (gate D-F1).",
+      "evidence": [
+        "research/v018-estimators/REPORT.md"
+      ],
+      "constraints": "Bulk version only, no folded variant.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "short-batch-means-intervals",
+      "title": "Short batch-means intervals for PIMC energy (package defaults b=32, b=128)",
+      "kind": "Estimator",
+      "research_line": "pimc-uncertainty",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab12/uncertainty.py",
+          "src/rnglab/stats.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_statistics12.py"
+        ],
+        "approx_test_count": 9
+      },
+      "reference": "Exact finite-bead energy",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v018-api-validation/protocol.json",
+        "sha256_file": "research/v018-api-validation/protocol.sha256"
+      },
+      "status": "negative-result",
+      "outcome_summary": "Under-cover even with the centroid refresh: 0.8611 at b=32 and 0.9260 at b=128; v0.17 short-block analyses gave 172/512 (BM32) and 311/512 (BM128).",
+      "evidence": [
+        "research/v018-api-validation/REPORT.md",
+        "docs/calibrate/V017_VMC_PIMC_VALIDATION.md"
+      ],
+      "constraints": "Use BM512 with 16 batches for this workload.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "prognosis-forecasters",
+      "title": "Conditional forecasting components (declared-family forecasters, scoring, validity)",
+      "kind": "Forecaster",
+      "research_line": "central-hypothesis-H2",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab/prognosis/forecasters.py",
+          "src/rnglab/prognosis/families.py",
+          "src/rnglab/prognosis/scoring.py",
+          "src/rnglab/prognosis/validity.py",
+          "src/rnglab/prognosis/surrogate.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v019/test_prognosis.py"
+        ],
+        "approx_test_count": 20
+      },
+      "reference": "Gaussian surrogate with known laws",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v019-forecast-methods/protocol.json",
+        "sha256_file": "research/v019-forecast-methods/protocol.sha256"
+      },
+      "status": "experimentally-validated",
+      "outcome_summary": "On the surrogate under the declared ramp the declared-model forecaster had Brier skill 0.228 [0.189, 0.268]; outside the family skill was -0.256 and -0.218.",
+      "evidence": [
+        "research/v019-forecast-methods/results/verdicts.json",
+        "docs/v019/FORECASTING_METHODS.md",
+        "docs/v019/RESEARCH_REPORT.md"
+      ],
+      "constraints": "Surrogate workload only; not a test of H2 or of any generator.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "stage-d-pilot-forecasters",
+      "title": "Stage D pilot forecasters F0, F0+, F-B-lite, F-AB-lite and evaluation barrier",
+      "kind": "Forecaster",
+      "research_line": "central-hypothesis-H2",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/v019-d-pilot/pilot_forecast.py",
+          "research/v019-d-pilot/pilot_analysis.py"
+        ]
+      },
+      "maturity": "pre-execution",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v019/test_pilot_pipeline.py",
+          "tests/v019/test_pilot_driver.py"
+        ],
+        "approx_test_count": 64
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v019-d-pilot/protocol.json",
+        "sha256_file": "research/v019-d-pilot/protocol.sha256"
+      },
+      "status": "unit-tested",
+      "outcome_summary": "Implemented and tested on synthetic fixtures; agrees with the independent recount on 1,972 of 1,974 fields; never fitted on real pilot data.",
+      "evidence": [
+        "docs/v020/STAGE_D_IMPLEMENTATION_STATUS.md",
+        "docs/v020/evidence/synthetic_agreement.json"
+      ],
+      "constraints": "Known-family laboratory design; pilot gated on author decisions C-3 to C-12.",
+      "integration_method": "code-source-worker",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "trident-theory-forecaster",
+      "title": "v0.16 TRIDENT theory-informed failure forecaster",
+      "kind": "Forecaster",
+      "research_line": "trident-v016",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab16/campaign.py",
+          "scripts/trident_analyze.py"
+        ]
+      },
+      "maturity": "historical-snapshot",
+      "test_coverage": {
+        "test_paths": [
+          "tests/trident/test_reference.py"
+        ],
+        "approx_test_count": 11
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "docs/trident/V016_SCIENTIFIC_PROTOCOL.md",
+        "sha256_file": null
+      },
+      "status": "negative-result",
+      "outcome_summary": "Theory Brier 0.08869430 vs combined 0.08867247 on test (required improvement 0.02 not reached) and worse out of distribution; the endpoint confounded thermal fluctuation with reliability loss.",
+      "evidence": [
+        "docs/trident/V016_NEGATIVE_FINDINGS.md"
+      ],
+      "constraints": "Outputs off-repo.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "calibrate-failure-risk-forecaster",
+      "title": "v0.17 CALIBRATE failure-risk boundaries and forecasts (H1-H5)",
+      "kind": "Forecaster",
+      "research_line": "calibrate-v017",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab17/campaign.py",
+          "src/rnglab17/endpoints.py",
+          "scripts/calibrate_forecast.py"
+        ]
+      },
+      "maturity": "historical-snapshot",
+      "test_coverage": {
+        "test_paths": [
+          "tests/calibrate/test_endpoints.py"
+        ],
+        "approx_test_count": 9
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "docs/calibrate/FROZEN_PROTOCOL.json",
+        "sha256_file": null
+      },
+      "status": "negative-result",
+      "outcome_summary": "H1 failed jointly (10/12 cells), H4 full usefulness and H5 unseen-fault generalisation unsupported; only H2 supported in seven selected cells.",
+      "evidence": [
+        "docs/calibrate/HYPOTHESIS_STATUS.json",
+        "docs/calibrate/V017_NEGATIVE_FINDINGS.md"
+      ],
+      "constraints": "Outputs off-repo.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "survival-forecast-baselines",
+      "title": "Forecast baselines and survival scoring (no-change, linear extrapolation, Kaplan-Meier, IPCW Brier)",
+      "kind": "Forecaster",
+      "research_line": "legacy-v014",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab14/forecast/predictor.py",
+          "src/rnglab14/forecast/survival.py",
+          "src/rnglab13/forecast/predictor.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_forecast_monitoring14.py",
+          "tests/test_models_forecast13.py",
+          "tests/test_recovery_forecast_sources.py"
+        ],
+        "approx_test_count": 24
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unit-tested",
+      "outcome_summary": "Building blocks with unit tests; no frozen study validates them.",
+      "evidence": [
+        "src/rnglab14/forecast/survival.py"
+      ],
+      "constraints": "Unvalidated as forecasters.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "rus-non-identifiability",
+      "title": "Remaining-useful-sample non-identifiability counterexample",
+      "kind": "Forecaster",
+      "research_line": "central-hypothesis-H2",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab13/math/impossibility.py",
+          "research/phase2-20261030/rus/rus_identifiability.py"
+        ]
+      },
+      "maturity": "analytic",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_math13.py",
+          "research/phase2-20261030/rus/test_counterexample.py"
+        ],
+        "approx_test_count": 12
+      },
+      "reference": "Constructive counterexample",
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "negative-result",
+      "outcome_summary": "Two degradation processes with identical observed history have different futures, so unrestricted forecasting needs a declared continuation; the excess-Brier bound is 0.2488 in this construction.",
+      "evidence": [
+        "research/phase2-20261030/rus/RUS_identifiability_and_protocol.md",
+        "docs/v019/FORECASTING_METHODS.md"
+      ],
+      "constraints": "A constructive counterexample, not a formal proof of the general theorem.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "recovery-forecast-experiments",
+      "title": "v0.14 recovery and forecast validation experiments",
+      "kind": "Forecaster",
+      "research_line": "legacy-v014",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "experiments/recovery_forecast_validation.py",
+          "experiments/recovery_forecast_validation_v2.py",
+          "experiments/recovery_physics_validation.py"
+        ]
+      },
+      "maturity": "historical-snapshot",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_recovery_api.py",
+          "tests/test_recovery_physics.py",
+          "tests/test_recovery_forecast_sources.py"
+        ],
+        "approx_test_count": 32
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "exploratory",
+      "outcome_summary": "Scripts and tests exist; no saved output in the repository records their results.",
+      "evidence": [
+        "docs/archive/RESEARCH_EVOLUTION_LOG.md"
+      ],
+      "constraints": "No frozen protocol; outputs not in Git.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "study-phase1-pimc-pilot",
+      "title": "Phase I scalar PIMC uncertainty pilot (2026-10-30)",
+      "kind": "Study",
+      "research_line": "pimc-uncertainty",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/phase1-20261030"
+        ]
+      },
+      "maturity": "historical-snapshot",
+      "test_coverage": {
+        "test_paths": [],
+        "approx_test_count": null
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "superseded",
+      "outcome_summary": "Historical pilot whose coverage counts Phase II verified; it was not evidence of RNG-induced failure.",
+      "evidence": [
+        "research/phase1-20261030/README.md"
+      ],
+      "constraints": "Use Phase II instead.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "study-phase2-confirmation",
+      "title": "Phase II harmonic PIMC confirmation (local, refresh, IID)",
+      "kind": "Study",
+      "research_line": "pimc-uncertainty",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/phase2-20261030/experiment/confirmation-v1"
+        ]
+      },
+      "maturity": "frozen-study-complete",
+      "test_coverage": {
+        "test_paths": [
+          "research/phase2-20261030/experiment/test_study.py"
+        ],
+        "approx_test_count": null
+      },
+      "reference": "Exact finite-M energy",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/phase2-20261030/experiment/confirmation-v1/protocol.json",
+        "sha256_file": "research/phase2-20261030/SHA256SUMS"
+      },
+      "status": "experimentally-validated",
+      "outcome_summary": "Healthy local Metropolis under-covers (811/1024) while centroid refresh (964/1024) and IID control (969/1024) pass the frozen gates: a sampler failure, not an RNG problem.",
+      "evidence": [
+        "research/phase2-20261030/experiment/confirmation-v1/summary.csv",
+        "research/phase2-20261030/experiment/confirmation-v1/primary_decision.json",
+        "research/phase2-20261030/reports/PIMC_root_cause_report.md"
+      ],
+      "constraints": "NPZ traces off-repo.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "study-phase2-fault-study",
+      "title": "Phase II controlled random-channel fault study",
+      "kind": "Study",
+      "research_line": "pimc-uncertainty",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/phase2-20261030/experiment/fault-study-v1"
+        ]
+      },
+      "maturity": "frozen-study-complete",
+      "test_coverage": {
+        "test_paths": [
+          "research/phase2-20261030/experiment/test_fault_study.py"
+        ],
+        "approx_test_count": null
+      },
+      "reference": "Exact finite-M energy",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/phase2-20261030/experiment/fault-study-v1/protocol.json",
+        "sha256_file": "research/phase2-20261030/SHA256SUMS"
+      },
+      "status": "experimentally-validated",
+      "outcome_summary": "Paired 512-replica study: 487/512 healthy coverage versus 0/512 (acceptance shift) and 13/512 (coupling).",
+      "evidence": [
+        "research/phase2-20261030/experiment/fault-study-v1/summary.csv",
+        "research/phase2-20261030/reports/Controlled_RNG_fault_report.md"
+      ],
+      "constraints": "Two strong synthetic faults; no general monitor ranking.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "study-phase2-analytic-dependence",
+      "title": "Phase II exact stationary dependence control",
+      "kind": "Study",
+      "research_line": "pimc-uncertainty",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/phase2-20261030/analytic-dependence"
+        ]
+      },
+      "maturity": "frozen-study-complete",
+      "test_coverage": {
+        "test_paths": [
+          "research/phase2-20261030/analytic-dependence/test_analytic_dependence.py"
+        ],
+        "approx_test_count": null
+      },
+      "reference": "Analytic stationary dependence law",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/phase2-20261030/analytic-dependence/protocol.json",
+        "sha256_file": "research/phase2-20261030/analytic-dependence/SHA256SUMS"
+      },
+      "status": "experimentally-validated",
+      "outcome_summary": "Reproduced short-batch variance underestimation with a correct target and healthy random inputs.",
+      "evidence": [
+        "research/phase2-20261030/analytic-dependence/analytic_dependence_report.md",
+        "research/phase2-20261030/analytic-dependence/summary.csv"
+      ],
+      "constraints": "Control study, not an RNG result.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "study-v016-trident",
+      "title": "v0.16 TRIDENT cross-model and forecasting study",
+      "kind": "Study",
+      "research_line": "trident-v016",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "docs/trident",
+          "src/rnglab16"
+        ]
+      },
+      "maturity": "historical-snapshot",
+      "test_coverage": {
+        "test_paths": [
+          "tests/trident/test_reference.py"
+        ],
+        "approx_test_count": 11
+      },
+      "reference": "Exact finite-size Ising (L <= 4)",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "docs/trident/V016_SCIENTIFIC_PROTOCOL.md",
+        "sha256_file": null
+      },
+      "status": "negative-result",
+      "outcome_summary": "Theory features gave no Brier improvement and the forecasting endpoint confounded thermal fluctuation with reliability loss; 18/24 paired Ising contrasts passed Holm.",
+      "evidence": [
+        "docs/trident/V016_NEGATIVE_FINDINGS.md",
+        "docs/trident/V016_SCIENTIFIC_REPORT.md"
+      ],
+      "constraints": "Outputs off-repo (~/ evidence root); an accidental same-seed replay is excluded.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "study-v017-calibrate",
+      "title": "v0.17 CALIBRATE study (H1-H5)",
+      "kind": "Study",
+      "research_line": "calibrate-v017",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "docs/calibrate",
+          "src/rnglab17",
+          "scripts/calibrate_analyze.py"
+        ]
+      },
+      "maturity": "historical-snapshot",
+      "test_coverage": {
+        "test_paths": [
+          "tests/calibrate/test_endpoints.py"
+        ],
+        "approx_test_count": 9
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "docs/calibrate/FROZEN_PROTOCOL.json",
+        "sha256_file": null
+      },
+      "status": "negative-result",
+      "outcome_summary": "H1 partial with global criterion failed, H2 supported in seven selected cells, H3 partial, H4 and H5 unsupported; healthy PIMC still under-covers.",
+      "evidence": [
+        "docs/calibrate/HYPOTHESIS_STATUS.json",
+        "docs/calibrate/V017_NEGATIVE_FINDINGS.md",
+        "docs/calibrate/V017_SCIENTIFIC_REPORT.md"
+      ],
+      "constraints": "Outputs off-repo; intervention benefit never measured.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "study-v018-estimators",
+      "title": "v0.18 Phase 1 estimator repair",
+      "kind": "Study",
+      "research_line": "ising-estimators",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/v018-estimators"
+        ]
+      },
+      "maturity": "frozen-study-complete",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v018/test_longrun.py",
+          "tests/v018/test_convergence_susceptibility.py"
+        ],
+        "approx_test_count": 19
+      },
+      "reference": "Ising enumeration; AR(1) exact variance",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v018-estimators/protocol.json",
+        "sha256_file": "research/v018-estimators/protocol.sha256"
+      },
+      "status": "negative-result",
+      "outcome_summary": "Mixed: H-L and H-D supported, H-S not supported (jackknife fails 5/9 cells), and the frozen control verdict was FALSE (1 of 20 intervals missed; controls_valid false in results/gates.json), documented in Amendment 01. Recorded as negative-result because not all frozen gates passed; the taxonomy has no 'mixed' label.",
+      "evidence": [
+        "research/v018-estimators/REPORT.md",
+        "research/v018-estimators/results/gates.json",
+        "research/v018-estimators/results/recount.json"
+      ],
+      "constraints": "Instrument checks on small lattices and idealised AR(1).",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "study-v018-api-validation",
+      "title": "v0.18 Phase 2 Phase II core result through the package API",
+      "kind": "Study",
+      "research_line": "pimc-uncertainty",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/v018-api-validation"
+        ]
+      },
+      "maturity": "frozen-study-complete",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v018/test_api_validation_scripts.py"
+        ],
+        "approx_test_count": 9
+      },
+      "reference": "Exact finite-bead energy",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v018-api-validation/protocol.json",
+        "sha256_file": "research/v018-api-validation/protocol.sha256"
+      },
+      "status": "experimentally-validated",
+      "outcome_summary": "H-API and H-REP supported: refresh 3846/4096, IID 3884/4096, local 3323/4096; paired improvement 0.1277 [0.1138, 0.1414]; recount 21/21.",
+      "evidence": [
+        "research/v018-api-validation/REPORT.md",
+        "research/v018-api-validation/results/gates.json",
+        "research/v018-api-validation/results/recount.json"
+      ],
+      "constraints": "Small unexplained refresh bias (CV -0.000321) inside the gate.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "study-v018-h1-detection",
+      "title": "v0.18 Stage C application-aware detection at matched false alarms (H1)",
+      "kind": "Study",
+      "research_line": "central-hypothesis-H1",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/v018-h1-detection"
+        ]
+      },
+      "maturity": "frozen-study-complete",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v018/test_h1_lib.py",
+          "tests/v018/test_h1_campaign.py"
+        ],
+        "approx_test_count": 22
+      },
+      "reference": "Exact finite-bead energy",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v018-h1-detection/protocol.json",
+        "sha256_file": "research/v018-h1-detection/protocol.sha256"
+      },
+      "status": "negative-result",
+      "outcome_summary": "H1-C not supported in any of SHIFT, LAG1, DUP, GFSR: no H1 cell and no undetected-harm cell among 24, with all validity gates passing and recount 319/319.",
+      "evidence": [
+        "research/v018-h1-detection/REPORT.md",
+        "research/v018-h1-detection/results/gates.json",
+        "research/v018-h1-detection/results/report_tables.md"
+      ],
+      "constraints": "Channel-specific faults excluded; one application.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "study-v018-h1-sensitivity01",
+      "title": "v0.18 Stage C Sensitivity 01: battery without the targeted word tests",
+      "kind": "Study",
+      "research_line": "central-hypothesis-H1",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/v018-h1-detection/sensitivity01.py",
+          "research/v018-h1-detection/SENSITIVITY_01.md"
+        ]
+      },
+      "maturity": "post-hoc-analysis",
+      "test_coverage": {
+        "test_paths": [],
+        "approx_test_count": null
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v018-h1-detection/SENSITIVITY_01.md",
+        "sha256_file": null
+      },
+      "status": "exploratory",
+      "outcome_summary": "With only seven SP 800-22 tests the Stage C verdicts stand, but for LAG1 up to 186/256 runs were wrong with no alarm and LAG1-4 missed the H1 class only by its lower bound (0.496 vs 0.5).",
+      "evidence": [
+        "research/v018-h1-detection/SENSITIVITY_01_RESULTS.md",
+        "research/v018-h1-detection/results/sensitivity01.json"
+      ],
+      "constraints": "Post hoc on stored Stage C data; plan frozen at c7231fa before analysis.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "study-crypto-blue-confirmation",
+      "title": "Crypto BLUE reviewed confirmation campaign (128 replicas)",
+      "kind": "Study",
+      "research_line": "crypto-blue",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/crypto-blue/confirmation-reviewed",
+          "research/crypto-blue/configs"
+        ]
+      },
+      "maturity": "frozen-study-complete",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_crypto_experiments.py"
+        ],
+        "approx_test_count": 5
+      },
+      "reference": "RFC known-answer tests",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/crypto-blue/confirmation-reviewed/protocol.json",
+        "sha256_file": null
+      },
+      "status": "negative-result",
+      "outcome_summary": "Seed-space weakness and nonce misuse were demonstrated, but the healthy-alarm bound failed (8/128) and SHA256/ChaCha20 missed the preregistered 90% non-rejection criterion (adjusted p=0.0509588).",
+      "evidence": [
+        "research/crypto-blue/confirmation-reviewed/RESULTS.md",
+        "research/crypto-blue/confirmation-reviewed/results.json",
+        "docs/crypto/RESULTS.md"
+      ],
+      "constraints": "Synthetic; does not establish general security-failure prediction. Hash list in manifest.json, no protocol.sha256.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "study-crypto-blue-sensitivity",
+      "title": "Crypto BLUE reviewed sensitivity campaign (64 replicas, longer horizon)",
+      "kind": "Study",
+      "research_line": "crypto-blue",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/crypto-blue/sensitivity-reviewed"
+        ]
+      },
+      "maturity": "frozen-study-complete",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_crypto_experiments.py"
+        ],
+        "approx_test_count": 5
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/crypto-blue/sensitivity-reviewed/protocol.json",
+        "sha256_file": null
+      },
+      "status": "experimentally-validated",
+      "outcome_summary": "Non-rejection 63/64, 63/64, 64/64 and 64/64 met its four-cell criteria; it does not change the confirmation decision.",
+      "evidence": [
+        "research/crypto-blue/sensitivity-reviewed/RESULTS.md",
+        "research/crypto-blue/sensitivity-reviewed/results.json"
+      ],
+      "constraints": "Same synthetic scope as confirmation. Non-rejection does not establish security; no production key-generation assurance.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "study-v019-d-pilot",
+      "title": "v0.19 Stage D feasibility pilot (H2-R)",
+      "kind": "Study",
+      "research_line": "central-hypothesis-H2",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/v019-d-pilot"
+        ]
+      },
+      "maturity": "pre-execution",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v019/test_pilot_driver.py",
+          "tests/v019/test_pilot_pipeline.py",
+          "tests/v019/test_d_pilot_measure.py",
+          "tests/v019/test_d_pilot_lib.py"
+        ],
+        "approx_test_count": 94
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v019-d-pilot/protocol.json",
+        "sha256_file": "research/v019-d-pilot/protocol.sha256"
+      },
+      "status": "planned",
+      "outcome_summary": "Protocol frozen 2026-11-10 and the execution path implemented; no pilot, smoke or campaign run generated; readiness assessment CONDITIONAL GO for the smoke first.",
+      "evidence": [
+        "docs/v020/STAGE_D_READINESS_REPORT.md",
+        "docs/v020/STAGE_D_IMPLEMENTATION_STATUS.md",
+        "research/v019-d-pilot/PROTOCOL.md"
+      ],
+      "constraints": "Generation refused without the author's authorization.json; F-01 oracle decision and storage (~31 GiB) pending.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "study-v019-d-smoke",
+      "title": "Stage D smoke run (ten runs, own namespace)",
+      "kind": "Study",
+      "research_line": "central-hypothesis-H2",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/v019-d-pilot/smoke/pre_generation_manifest.json"
+        ]
+      },
+      "maturity": "pre-execution",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v019/test_pilot_driver.py"
+        ],
+        "approx_test_count": 34
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v019-d-pilot/protocol.json",
+        "sha256_file": "research/v019-d-pilot/protocol.sha256"
+      },
+      "status": "planned",
+      "outcome_summary": "Pre-generation manifest committed for the author's review; no smoke run exists.",
+      "evidence": [
+        "research/v019-d-pilot/smoke/pre_generation_manifest.json",
+        "docs/v020/STAGE_D_READINESS_REPORT.md"
+      ],
+      "constraints": "Excluded from every result by design.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "study-v019-forecast-methods",
+      "title": "v0.19 forecasting methods validation on a surrogate workload",
+      "kind": "Study",
+      "research_line": "central-hypothesis-H2",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/v019-forecast-methods"
+        ]
+      },
+      "maturity": "frozen-study-complete",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v019/test_prognosis.py"
+        ],
+        "approx_test_count": 20
+      },
+      "reference": "Gaussian surrogate with known laws",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v019-forecast-methods/protocol.json",
+        "sha256_file": "research/v019-forecast-methods/protocol.sha256"
+      },
+      "status": "experimentally-validated",
+      "outcome_summary": "Readings R1, R2, R3 and R7 MET (R4-R6 descriptive); forecasters fail outside the declared family.",
+      "evidence": [
+        "research/v019-forecast-methods/results/verdicts.json",
+        "research/v019-forecast-methods/results/tables.md"
+      ],
+      "constraints": "Not a test of H2-R or of any generator.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "independent-audit-toolkit",
+      "title": "Independent recount, replay, verifier, integrity scan and preflight (v0.19 audit)",
+      "kind": "Study",
+      "research_line": "central-hypothesis-H2",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/v019-audit/recount.py",
+          "research/v019-audit/replay.py",
+          "research/v019-audit/verify.py",
+          "research/v019-audit/integrity.py",
+          "research/v019-audit/preflight.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v019/test_audit_recount.py",
+          "tests/v019/test_audit_d_pilot.py",
+          "tests/v019/test_audit_verify.py",
+          "tests/v019/test_audit_integrity.py"
+        ],
+        "approx_test_count": 72
+      },
+      "reference": "Stage C stored results",
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "independently-verified",
+      "outcome_summary": "Reproduces Stage C independently (threshold 3.8177723774232715, 199/4096 alarms, 3867/4096 coverage) and never imports the primary pilot code.",
+      "evidence": [
+        "docs/v019/RESEARCH_REPORT.md",
+        "research/v019-audit/results/audit_numbers.json"
+      ],
+      "constraints": "Organisationally the same project, not an external audit.",
+      "integration_method": "code-source-worker",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "study-v020-nuclear-a-verify",
+      "title": "v0.20 nuclear Layer A frozen verification",
+      "kind": "Study",
+      "research_line": "nuclear-v020",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/v020-nuclear-a-verify"
+        ]
+      },
+      "maturity": "frozen-study-complete",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v020/nuclear"
+        ],
+        "approx_test_count": 115
+      },
+      "reference": "Analytic decay laws",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v020-nuclear-a-verify/protocol.json",
+        "sha256_file": "research/v020-nuclear-a-verify/protocol.sha256"
+      },
+      "status": "independently-verified",
+      "outcome_summary": "R1 PASS, R2 MET; run once at c616a7b on a clean tree.",
+      "evidence": [
+        "research/v020-nuclear-a-verify/results/verification.json",
+        "research/v020-nuclear-a-verify/results/tables.md"
+      ],
+      "constraints": "Synthetic schemes.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "study-v020-nuclear-b2-verify",
+      "title": "v0.20 nuclear B2 frozen calibration and verification",
+      "kind": "Study",
+      "research_line": "nuclear-v020",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/v020-nuclear-b2-verify"
+        ]
+      },
+      "maturity": "frozen-study-complete",
+      "test_coverage": {
+        "test_paths": [
+          "tests/v020/nuclear_b2"
+        ],
+        "approx_test_count": 202
+      },
+      "reference": "Multinomial independent-decay law; Layer A engine",
+      "frozen_protocol": {
+        "status": "frozen",
+        "protocol_path": "research/v020-nuclear-b2-verify/protocol.json",
+        "sha256_file": "research/v020-nuclear-b2-verify/protocol.sha256"
+      },
+      "status": "independently-verified",
+      "outcome_summary": "R1 PASS, R2 MET, C1 holds; open questions on the BT-NEUTRON NC1 calibration tail and the Xc-400m variance observation.",
+      "evidence": [
+        "research/v020-nuclear-b2-verify/results/verification.json",
+        "research/v020-nuclear-b2-verify/results/calibration.json",
+        "research/v020-nuclear-b2-verify/results/tables.md"
+      ],
+      "constraints": "Synthetic schemes.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "study-v020-nuclear-b2-numerics",
+      "title": "v0.20 nuclear B2 numerical limits",
+      "kind": "Study",
+      "research_line": "nuclear-v020",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/v020-nuclear-b2-numerics"
+        ]
+      },
+      "maturity": "measurement-run-once",
+      "test_coverage": {
+        "test_paths": [],
+        "approx_test_count": null
+      },
+      "reference": "Rational or 50-150 digit decimal references",
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "independently-verified",
+      "outcome_summary": "Binomial distribution function error at most 3.2e-16 as the sampler consults it (n 10 to 1e9); no non-finite Boost values up to the 2^50 part limit.",
+      "evidence": [
+        "research/v020-nuclear-b2-numerics/results/numerics.json",
+        "docs/v020/nuclear/NUCLEAR_B2_NUMERICAL_LIMITS.md"
+      ],
+      "constraints": "Measurement, not a hypothesis test.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "study-v020-nuclear-b2-bench",
+      "title": "v0.20 nuclear B2 single-machine benchmark",
+      "kind": "Study",
+      "research_line": "nuclear-v020",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/v020-nuclear-b2-bench"
+        ]
+      },
+      "maturity": "measurement-run-once",
+      "test_coverage": {
+        "test_paths": [],
+        "approx_test_count": null
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "exploratory",
+      "outcome_summary": "Single-workstation timings recorded with git_dirty true and the machine in ordinary use; not HPC measurements.",
+      "evidence": [
+        "research/v020-nuclear-b2-bench/results/benchmark.json",
+        "docs/v020/nuclear/NUCLEAR_B2_BENCHMARK.md"
+      ],
+      "constraints": "System load not recorded.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "nuclear-layer-b-c-and-phases-efg",
+      "title": "Nuclear Layer B (branching, reduced kinetics), Layer C (detector response), Phases E-G (RNG defects, criticality, HPC)",
+      "kind": "Simulation",
+      "research_line": "nuclear-v020",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "docs/v020/nuclear/NUCLEAR_ARCHITECTURE.md"
+        ]
+      },
+      "maturity": "plan",
+      "test_coverage": {
+        "test_paths": [],
+        "approx_test_count": null
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "planned",
+      "outcome_summary": "Not started; next step is Phase C (Layer B) with its own frozen verification in a fresh namespace.",
+      "evidence": [
+        "docs/v020/nuclear/NUCLEAR_ARCHITECTURE.md"
+      ],
+      "constraints": "Nothing measured on an HPC system.",
+      "integration_method": "none-yet",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "stage-e-intervention-h3",
+      "title": "Stage E intervention and lifetime extension (H3)",
+      "kind": "Study",
+      "research_line": "central-hypothesis-H3",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "docs/v018/ROADMAP.md",
+          "docs/v018/STAGE_DE_REVIEW.md"
+        ]
+      },
+      "maturity": "plan",
+      "test_coverage": {
+        "test_paths": [],
+        "approx_test_count": null
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "planned",
+      "outcome_summary": "Never measured; stays conditional on the Stage D pilot; v0.17 used only a hypothetical 50% mitigation.",
+      "evidence": [
+        "docs/v018/ROADMAP.md",
+        "docs/v018/STAGE_DE_REVIEW.md"
+      ],
+      "constraints": "No mid-run source switch or checkpoint branching in the package.",
+      "integration_method": "none-yet",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "v014-integrated-experiment",
+      "title": "v0.14 integrated experiment and experiment registry",
+      "kind": "Study",
+      "research_line": "legacy-v014",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "experiments/run_v014_integrated_experiment.py",
+          "runs/v014-integrated-experiment",
+          "docs/validation/EXPERIMENT_REGISTRY.md"
+        ]
+      },
+      "maturity": "historical-snapshot",
+      "test_coverage": {
+        "test_paths": [],
+        "approx_test_count": null
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "superseded",
+      "outcome_summary": "One uncalibrated run; 'replicated over 10 seeds' and the 0.0% hazardous gap are not supported by the saved results.",
+      "evidence": [
+        "docs/v018/AUDIT.md",
+        "docs/archive/V0141_CORRECTIONS.md"
+      ],
+      "constraints": "Do not cite.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "source-comparison-matrix",
+      "title": "Source comparison benchmark matrix",
+      "kind": "Study",
+      "research_line": "legacy-v014",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "docs/validation/SOURCE_COMPARISON.md"
+        ]
+      },
+      "maturity": "claim-only",
+      "test_coverage": {
+        "test_paths": [],
+        "approx_test_count": null
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unbacked",
+      "outcome_summary": "No producing script; throughputs 29-156x above measured for four of five sources and an impossible 'all 15' SP 800-22 claim.",
+      "evidence": [
+        "docs/v018/AUDIT.md",
+        "docs/v018/evidence/source_throughput.json"
+      ],
+      "constraints": "Not marked superseded in the file itself.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "cpu-gpu-benchmarks",
+      "title": "CPU versus GPU (L4) benchmarks",
+      "kind": "Study",
+      "research_line": "legacy-benchmarks",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "docs/benchmarks/GPU_L4_AUDIT_SUMMARY.md",
+          "docs/benchmarks/RNGLAB_CPU_GPU_COMPARISON.md"
+        ]
+      },
+      "maturity": "claim-only",
+      "test_coverage": {
+        "test_paths": [],
+        "approx_test_count": null
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unbacked",
+      "outcome_summary": "No benchmark script, raw timing or telemetry in Git (0 of 67 numbers matched any repository output).",
+      "evidence": [
+        "docs/v018/AUDIT.md"
+      ],
+      "constraints": "Author's own measurements, not reproducible from the repository.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "legacy-snapshots-v01-v13",
+      "title": "Legacy packages rnglab v0.2-v0.8 and rnglab10-rnglab13 (historical snapshots)",
+      "kind": "Study",
+      "research_line": "legacy",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "src/rnglab/v02",
+          "src/rnglab/v03",
+          "src/rnglab/v04",
+          "src/rnglab/v07",
+          "src/rnglab/v08",
+          "src/rnglab/providers",
+          "src/rnglab/degradation",
+          "src/rnglab10",
+          "src/rnglab11",
+          "src/rnglab12",
+          "src/rnglab13"
+        ]
+      },
+      "maturity": "historical-snapshot",
+      "test_coverage": {
+        "test_paths": [
+          "tests/test_sources12.py",
+          "tests/test_statistics12.py",
+          "tests/test_reliability12.py",
+          "tests/test_math13.py",
+          "tests/test_coordinator13.py"
+        ],
+        "approx_test_count": 50
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "superseded",
+      "outcome_summary": "Kept unchanged for traceability; the v0.18 namespace re-exports only audited components from rnglab12/14/16/17.",
+      "evidence": [
+        "README.md",
+        "docs/v018/ARCHITECTURE.md"
+      ],
+      "constraints": "rnglab12.uncertainty and rnglab13.math remain in use.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "laboratory-gui",
+      "title": "Laboratory GUI: local server, model catalog, worker adapters, historical archive browser",
+      "kind": "Visualizer",
+      "research_line": "unified-suite",
+      "source": {
+        "branch": "feature/unified-suite",
+        "commit": "feature/unified-suite HEAD",
+        "paths": [
+          "gui/rnglab_gui",
+          "gui/lab.py",
+          "tests/gui"
+        ]
+      },
+      "maturity": "work-in-progress",
+      "test_coverage": {
+        "test_paths": [
+          "tests/gui/test_observation_reproducibility.py",
+          "tests/unified/test_unified_server.py"
+        ],
+        "approx_test_count": null
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "implemented",
+      "outcome_summary": "Imported from the lab-gui worktree (5de3f30), then changed on this branch: verification, capacity and reader fixes, four adapters reworded, unified screens added. Adapters exist for PIMC, Ising, pi, decision support, H1 detection and both nuclear engines.",
+      "evidence": [
+        "gui/rnglab_gui/catalog.py",
+        "tests/unified/test_unified_server.py"
+      ],
+      "constraints": "Not reachable from e690488. Software checks only: running a model changes no scientific status.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "control-center-cpp-prototype",
+      "title": "Control-center C++ artefact/journal/NPZ reader prototype",
+      "kind": "Visualizer",
+      "research_line": "unified-suite",
+      "source": {
+        "branch": "feature/control-center (untracked worktree files)",
+        "commit": "6b75205",
+        "paths": [
+          "ui/src/core/Artifacts.cpp",
+          "ui/src/core/Journal.cpp",
+          "ui/src/core/Npz.cpp",
+          "ui/tests/make_fixture.py"
+        ]
+      },
+      "maturity": "untracked-prototype",
+      "test_coverage": {
+        "test_paths": [
+          "ui/tests/make_fixture.py"
+        ],
+        "approx_test_count": null
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "exploratory",
+      "outcome_summary": "About 1,400 lines of untracked C++ readers for artefacts, the audit journal and NPZ traces; never committed.",
+      "evidence": [],
+      "constraints": "Exists only as untracked files in one worktree; at risk of loss.",
+      "integration_method": "none-yet",
+      "reachable_from_unified": false
+    },
+    {
+      "id": "study-figure-scripts",
+      "title": "Study figure and table scripts (Phase II plots, Stage C figures, report_tables.py per study)",
+      "kind": "Visualizer",
+      "research_line": "cross-cutting",
+      "source": {
+        "branch": "feature/criticality-rng-sensitivity",
+        "commit": "e690488",
+        "paths": [
+          "research/phase2-20261030/experiment/plot_results.py",
+          "research/phase2-20261030/experiment/plot_fault_results.py",
+          "research/v018-h1-detection/plot.py",
+          "research/v020-nuclear-b2-verify/report_tables.py",
+          "src/rnglab/experiments/plotting.py"
+        ]
+      },
+      "maturity": "research-prototype",
+      "test_coverage": {
+        "test_paths": [],
+        "approx_test_count": null
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "implemented",
+      "outcome_summary": "Each frozen study writes its tables and figures from its result JSON.",
+      "evidence": [
+        "research/phase2-20261030/experiment/figures/figure_manifest.json",
+        "research/v018-h1-detection/results/report_tables.md"
+      ],
+      "constraints": "Static outputs only.",
+      "integration_method": "read-only-browse",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "core-source-registry",
+      "title": "Shared source registry and recorded-stream replay source",
+      "kind": "RandomSource",
+      "research_line": "unified-framework",
+      "source": {
+        "branch": "feature/unified-suite",
+        "commit": "b670862",
+        "paths": [
+          "src/rnglab_core/sources.py",
+          "src/rnglab_core/streams.py"
+        ]
+      },
+      "maturity": "new-shared-core",
+      "test_coverage": {
+        "test_paths": [
+          "tests/unified/test_core_regression.py",
+          "tests/unified/test_core_engine.py"
+        ],
+        "approx_test_count": null
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unit-tested",
+      "outcome_summary": "One registry over the rnglab14 sources and the NumPy PCG64 source, with separate fields for determinism, statistical quality, entropy claim, unpredictability and independence; recorded files replay from disjoint, digest-checked segments.",
+      "evidence": [
+        "tests/unified/test_core_regression.py",
+        "tests/unified/test_core_engine.py"
+      ],
+      "constraints": "No entropy assessment of any recorded stream; independence of namespace-derived streams is not proven.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "core-fault-registry",
+      "title": "Shared fault registry with compatibility contracts",
+      "kind": "Fault",
+      "research_line": "unified-framework",
+      "source": {
+        "branch": "feature/unified-suite",
+        "commit": "b670862",
+        "paths": [
+          "src/rnglab_core/faults.py",
+          "src/rnglab_core/contracts.py"
+        ]
+      },
+      "maturity": "new-shared-core",
+      "test_coverage": {
+        "test_paths": [
+          "tests/unified/test_core_regression.py",
+          "tests/unified/test_core_engine.py"
+        ],
+        "approx_test_count": null
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unit-tested",
+      "outcome_summary": "Byte, bit and word faults are reused unchanged (registry bytes equal direct construction); contracts refuse word faults on non-aligned roles and model-internal families.",
+      "evidence": [
+        "tests/unified/test_core_regression.py",
+        "tests/unified/test_core_engine.py"
+      ],
+      "constraints": "Phase II channel faults, Stage D ramp, crypto and finance faults remain model-specific; rnglab11/12/16 fault code is not integrated.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "core-model-adapters",
+      "title": "Shared model adapters (PIMC, VMC, Ising, nuclear Layer A and B2)",
+      "kind": "Simulation",
+      "research_line": "unified-framework",
+      "source": {
+        "branch": "feature/unified-suite",
+        "commit": "b670862",
+        "paths": [
+          "src/rnglab_core/models.py"
+        ]
+      },
+      "maturity": "new-shared-core",
+      "test_coverage": {
+        "test_paths": [
+          "tests/unified/test_core_regression.py"
+        ],
+        "approx_test_count": null
+      },
+      "reference": "exact references per model",
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unit-tested",
+      "outcome_summary": "Adapters call the canonical model code unchanged; the PIMC adapter reproduces three frozen golden cases bit for bit and the word splitter leaves both nuclear digests unchanged.",
+      "evidence": [
+        "tests/unified/test_core_regression.py"
+      ],
+      "constraints": "Decision support, pi, finance, crypto BLUE and Wolff dynamics have no adapter yet.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "core-measurement",
+      "title": "Shared measurement layer (reference deviation, interval failure, paired effects, Holm, battery)",
+      "kind": "Monitor",
+      "research_line": "unified-framework",
+      "source": {
+        "branch": "feature/unified-suite",
+        "commit": "b670862",
+        "paths": [
+          "src/rnglab_core/measure.py"
+        ]
+      },
+      "maturity": "new-shared-core",
+      "test_coverage": {
+        "test_paths": [
+          "tests/unified/test_core_engine.py"
+        ],
+        "approx_test_count": null
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unit-tested",
+      "outcome_summary": "Reuses rnglab14 Holm, rnglab17 exact rates and the frozen Stage C battery.",
+      "evidence": [
+        "tests/unified/test_core_engine.py"
+      ],
+      "constraints": "The battery rule (Holm over ten tests) is not the frozen study's calibrated threshold; paired p-values use a normal approximation.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "core-experiment-engine",
+      "title": "Experiment specification, engine, sealed records and replay",
+      "kind": "Study",
+      "research_line": "unified-framework",
+      "source": {
+        "branch": "feature/unified-suite",
+        "commit": "b670862",
+        "paths": [
+          "src/rnglab_core/spec.py",
+          "src/rnglab_core/engine.py",
+          "src/rnglab_core/record.py"
+        ]
+      },
+      "maturity": "new-shared-core",
+      "test_coverage": {
+        "test_paths": [
+          "tests/unified/test_core_engine.py",
+          "tests/unified/test_unified_server.py"
+        ],
+        "approx_test_count": null
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "unit-tested",
+      "outcome_summary": "One spec runs matched healthy, faulted and (optionally) intervened arms across models into one sealed record; replay reproduces spec, stream and result digests.",
+      "evidence": [
+        "tests/unified/test_core_engine.py",
+        "tests/unified/test_unified_server.py"
+      ],
+      "constraints": "Single-machine replay only; no frozen-protocol mode yet.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "core-intervention-forecast",
+      "title": "Online monitor, authorised source switch and conditional exposure forecast",
+      "kind": "Forecaster",
+      "research_line": "unified-framework",
+      "source": {
+        "branch": "feature/unified-suite",
+        "commit": "b670862",
+        "paths": [
+          "src/rnglab_core/streams.py",
+          "src/rnglab_core/engine.py"
+        ]
+      },
+      "maturity": "new-shared-core",
+      "test_coverage": {
+        "test_paths": [
+          "tests/unified/test_core_engine.py"
+        ],
+        "approx_test_count": null
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "implemented",
+      "outcome_summary": "Detection-triggered switch to an independent source with measured recovery; exposure forecast under a declared persistent-step model, checked against the faulted arm.",
+      "evidence": [
+        "tests/unified/test_core_engine.py"
+      ],
+      "constraints": "Monitor not calibrated at matched false alarms; the rnglab.prognosis forecasters are not connected; no frozen study.",
+      "integration_method": "adapter",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "cross-domain-shift-exploration",
+      "title": "Cross-domain SHIFT exploration (interactive runs)",
+      "kind": "Study",
+      "research_line": "unified-framework",
+      "source": {
+        "branch": "feature/unified-suite",
+        "commit": "b670862",
+        "paths": [
+          "src/rnglab_core/engine.py"
+        ]
+      },
+      "maturity": "new-shared-core",
+      "test_coverage": {
+        "test_paths": [
+          "tests/unified/test_core_engine.py"
+        ],
+        "approx_test_count": null
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "exploratory",
+      "outcome_summary": "Interactive runs only (small replicate counts, no frozen protocol): no finding is claimed.",
+      "evidence": [
+        "tests/unified/test_core_engine.py"
+      ],
+      "constraints": "Must be pre-registered and frozen before any number is reported.",
+      "integration_method": "code-source-worker",
+      "reachable_from_unified": true
+    },
+    {
+      "id": "detector-response-model",
+      "title": "Detector-response model connected to physical-event simulations",
+      "kind": "Simulation",
+      "research_line": "unified-framework",
+      "source": {
+        "branch": "feature/unified-suite",
+        "commit": "b670862",
+        "paths": []
+      },
+      "maturity": "new-shared-core",
+      "test_coverage": {
+        "test_paths": [],
+        "approx_test_count": null
+      },
+      "reference": null,
+      "frozen_protocol": {
+        "status": "none",
+        "protocol_path": null,
+        "sha256_file": null
+      },
+      "status": "planned",
+      "outcome_summary": "Not implemented.",
+      "evidence": [],
+      "constraints": "Needs its own validation before any comparison with simulated events.",
+      "integration_method": "none-yet",
+      "reachable_from_unified": true
+    }
+  ]
+}
